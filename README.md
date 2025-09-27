@@ -13,22 +13,6 @@ It focuses on clarity, simplicity, and beauty in code.
 - Scripts can run with minimal setup
 - Designed for beginners and educational purposes
 
----
-
-# COM-code（日本語版）
-
-COM-codeは、書きやすさ、読みやすさ、そして学習のしやすさを重視して設計されたプログラミング言語です。  
-コードの明瞭さ、シンプルさ、そして美しさを重視しています。  
-**日本製 🇯🇵**
-
-## 機能
-
-- シンプルな文法
-- ループ、条件分岐、関数の利用
-- 変数操作が簡単
-- 最小限の設定でスクリプト実行可能
-- 初心者や学習用途向け
-
 - ## COM-code Grammar
 
 Basics
@@ -84,3 +68,18 @@ Always start the line with !?/@ for COM-code commands
 COM-code is designed to be easy to read, write, learn, and beautiful
 
 
+---
+
+# COM-code（日本語版）
+
+COM-codeは、書きやすさ、読みやすさ、そして学習のしやすさを重視して設計されたプログラミング言語です。  
+コードの明瞭さ、シンプルさ、そして美しさを重視しています。  
+**日本製 🇯🇵**
+
+## 機能
+
+- シンプルな文法
+- ループ、条件分岐、関数の利用
+- 変数操作が簡単
+- 最小限の設定でスクリプト実行可能
+- 初心者や学習用途向け
