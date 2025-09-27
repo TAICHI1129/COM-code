@@ -4,6 +4,7 @@ COM-code is a programming language that is easy to write, easy to read, and beau
 COM-code is a programming language designed to be easy to write, read, and learn.  
 It focuses on clarity, simplicity, and beauty in code.  
 **Made in Japan 🇯🇵**
+
 Official website:
 https://com-code.jimdosite.com
 
@@ -77,6 +78,7 @@ COM-code is designed to be easy to read, write, learn, and beautiful
 COM-codeは、書きやすさ、読みやすさ、そして学習のしやすさを重視して設計されたプログラミング言語です。  
 コードの明瞭さ、シンプルさ、そして美しさを重視しています。  
 **日本製 🇯🇵**
+
 公式サイト：
 https://com-code.jimdosite.com
 
