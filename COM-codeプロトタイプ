@@ -1,52 +1,96 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
 
-int count = 0; // グローバル変数例
+#define MAX_LINES 100
+#define MAX_LINE_LEN 256
+#define MAX_FUNCTIONS 20
 
+typedef struct {
+    char name[50];
+    int start;
+    int end;
+} Function;
+
+char *script[MAX_LINES];
+int script_line_count = 0;
+Function functions[MAX_FUNCTIONS];
+int function_count = 0;
+int count_var = 0;
+
+// 関数定義登録
+void define_function(int start_line) {
+    char name[50];
+    sscanf(script[start_line], "?%s", name);
+    int end_line = start_line;
+    while (end_line < script_line_count && strncmp(script[end_line], "?end", 4) != 0)
+        end_line++;
+    strcpy(functions[function_count].name, name);
+    functions[function_count].start = start_line + 1;
+    functions[function_count].end = end_line - 1;
+    function_count++;
+}
+
+// 関数呼び出し
+void call_function(char *line) {
+    char name[50];
+    sscanf(line, "!%s", name);
+    for (int i = 0; i < function_count; i++) {
+        if (strcmp(functions[i].name, name) == 0) {
+            for (int j = functions[i].start; j <= functions[i].end; j++)
+                ; // interpret_line(script[j]); // 後で実装
+            return;
+        }
+    }
+    printf("Function not found: %s\n", name);
+}
+
+// 行の解釈
 void interpret_line(char *line) {
     if (line[0] == '/') {
         if (strncmp(line, "/print(", 7) == 0) {
-            // /print(:Count is :Count)
-            char buffer[256];
-            strcpy(buffer, line + 7);
-            char *p = strstr(buffer, ")");
-            if (p) *p = 0; // 閉じカッコ削除
-
-            // :Count を置換
-            char output[256];
-            char *pos = strstr(buffer, ":Count");
-            if (pos) {
-                *pos = 0;
-                sprintf(output, "%s%d%s", buffer, count, pos + 6);
-                printf("%s\n", output);
-            } else {
-                printf("%s\n", buffer);
-            }
+            char content[100];
+            sscanf(line, "/print(:%[^)])", content);
+            printf("%s\n", content);
         }
         else if (strncmp(line, "/wait(", 6) == 0) {
-            int sec = atoi(line + 6);
-            sleep(sec);
+            int sec;
+            sscanf(line, "/wait(%d)", &sec);
+            // sleep(sec); // Windowsなら Sleep(sec*1000);
         }
     }
     else if (line[0] == '@') {
-        // @count = count + 1
-        count++;
+        if (sscanf(line, "@count = %d", &count_var)) {}
+    }
+    else if (line[0] == '!') {
+        call_function(line);
     }
 }
 
-int main() {
-    char *script[] = {
-        "/print(:Count is :Count)",
-        "/wait(1)",
-        "@count = count + 1",
-        "/print(:Count is :Count)"
-    };
-
-    for (int i = 0; i < 4; i++) {
-        interpret_line(script[i]);
+// スクリプト読み込み
+void load_script(const char *filename) {
+    FILE *fp = fopen(filename, "r");
+    if (!fp) { perror("File open error"); return; }
+    char buffer[MAX_LINE_LEN];
+    while (fgets(buffer, MAX_LINE_LEN, fp)) {
+        buffer[strcspn(buffer, "\n")] = 0; // 改行削除
+        script[script_line_count] = strdup(buffer);
+        script_line_count++;
     }
+    fclose(fp);
+}
+
+// main
+int main() {
+    load_script("test.comc");
+
+    // 関数登録
+    for (int i = 0; i < script_line_count; i++)
+        if (script[i][0] == '?') define_function(i);
+
+    // スクリプト実行
+    for (int i = 0; i < script_line_count; i++)
+        interpret_line(script[i]);
 
     return 0;
 }
