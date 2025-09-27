@@ -28,3 +28,59 @@ COM-codeは、書きやすさ、読みやすさ、そして学習のしやすさ
 - 変数操作が簡単
 - 最小限の設定でスクリプト実行可能
 - 初心者や学習用途向け
+
+- ## COM-code Grammar
+
+Basics
+
+! : Call a function
+
+? : Define a function
+
+/ : Run a script command
+
+@ : Declare or assign a variable
+
+> Note: Each line must start with one of these symbols if it’s a COM-code command.
+
+
+
+Variables
+Declare or assign a variable:
+@count = 0
+
+Printing
+Print a message or variable:
+/print(:Hello, COM-code!)
+/print(:Count is :count)
+
+: before a variable inside print outputs its value.
+
+Loops
+While loop example:
+/while(
+/print(:Count is :count)
+/wait(1)
+@count = count + 1
+)-if-<count<3>
+
+/wait(seconds) pauses the loop for the given number of seconds
+-if-<condition> checks the loop condition
+
+Functions
+Define a function:
+?greet(name)
+/print(:Hello, :name!)
+
+Call a function:
+!greet(:TAICHI)
+
+Notes
+
+Indentation is not required
+
+Always start the line with !?/@ for COM-code commands
+
+COM-code is designed to be easy to read, write, learn, and beautiful
+
+
